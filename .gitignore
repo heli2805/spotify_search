@@ -1,0 +1,21 @@
+# Ignorer les fichiers compilés
+*.pyc
+*.o
+*.exe
+
+# Ignorer les dossiers spécifiques
+/node_modules
+/venv
+/__pycache__/
+/env/
+
+# Ignorer les fichiers de configuration locale
+.env
+.vscode/
+.DS_Store
+
+# Ignorer les fichiers de log
+*.log
+
+# Ignorer les fichiers de configuration sensible
+config/settings_local.py
