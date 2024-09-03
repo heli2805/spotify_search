@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moteur de Recherche</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Moteur de Recherche</h1>
+
+        <form action="/search" method="GET" class="mb-4">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="query">Rechercher</label>
+                    <input type="text" class="form-control" id="query" name="query" placeholder="Chanson, Artiste ou Album">
+                </div>
+
+            </div>
+            <button type="submit" class="btn btn-primary">Rechercher</button>
+        </form>
+
+        <h2>Résultats de la recherche</h2>
+            <div id="results">
+                {% if results %}
+                    <ul class="list-group">
+                        {% for hit in results %}
+                            <li class="list-group-item">
+                                <strong>{{ hit._source.track_name }}</strong> de {{ hit._source.artist_name }}<br>
+                                Album: {{ hit._source.album_name }} | Popularité: {{ hit._source.popularity }} | Date de sortie: {{ hit._source.release_date }}<br>
+                                Lien vers la musique : <a href="{{ hit._source.external_url }}" target="_blank">{{ hit._source.external_url }}</a>
+
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Aucun résultat trouvé.</p>
+                {% endif %}
+            </div>
+
+
+
+        <h2>Tableau de bord Kibana</h2>
+        <div id="kibana-dashboard">
+            <iframe src="http://localhost:5601/app/dashboards#/view/955ec090-695b-11ef-b736-775b3386b5fa?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-15m,to:now))" width="100%" height="600"></iframe>
+        </div>
+    </div>
+</body>
+</html>
