@@ -1,50 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moteur de Recherche</title>
+    <title>Moteur de Recherche Spotify</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap"> <!-- Exemple de police stylée -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Lora', serif;
+            background-color: #000; /* Fond noir pour le mode sombre par défaut */
+            color: #e0e0e0; /* Texte en gris clair pour une meilleure lisibilité */
+            overflow-y: auto; /* Permet le défilement vertical */
+        }
+
+        .theme-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1;
+        }
+
+        .theme-button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .theme-button:focus {
+            outline: none;
+        }
+
+        .light-theme {
+            background-color: #f8f9fa;
+            color: #000;
+        }
+
+        .dark-theme {
+            background-color: #000;
+            color: #e0e0e0;
+        }
+
+    
+
+        .search-container {
+            margin-top: 50px;
+        }
+
+        .search-box {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            background-color: #222; /* Fond du formulaire en gris foncé */
+        }
+
+        .form-control {
+            background-color: #333; /* Fond du champ de recherche en gris foncé */
+            color: #e0e0e0; /* Texte du champ de recherche en gris clair */
+            border: 1px solid #444; /* Bordure du champ de recherche */
+        }
+
+        .form-control:focus {
+            background-color: #333; /* Fond du champ de recherche au focus */
+            color: #e0e0e0; /* Texte du champ de recherche au focus */
+            border-color: #e7664c; /* Bordure du champ de recherche au focus */
+            box-shadow: 0 0 0 0.2rem rgba(231, 102, 76, 0.25); /* Ombre au focus */
+        }
+
+        .btn-primary {
+            background-color: #e7664c; /* Couleur du bouton */
+            border-color: #e7664c; /* Bordure du bouton */
+        }
+
+        .btn-primary:hover {
+            background-color: #cc5d47; /* Couleur du bouton au survol */
+            border-color: #cc5d47; /* Bordure du bouton au survol */
+        }
+
+        .results-container {
+            margin-top: 30px;
+            max-height: 80vh; /* Hauteur maximale de la zone de résultats */
+            overflow-y: auto; /* Permet le défilement des résultats */
+        }
+
+        .result-item {
+            border-bottom: 1px solid #444; /* Bordure des résultats */
+            padding: 15px 0;
+            perspective: 1000px;
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+            color: #000; /* Texte des résultats en noir */
+            font-weight: bold; /* Texte en gras */
+            font-family: 'Lora', serif; /* Police stylée */
+        }
+
+        .result-item:hover {
+            transform: rotateY(15deg);
+            background-color: #222; /* Fond des résultats au survol */
+            color: #e7664c; /* Texte des résultats au survol */
+        }
+
+        .result-item a {
+            color: #e7664c; /* Couleur des liens */
+        }
+
+        .result-item a:hover {
+            color: #cc5d47; /* Couleur des liens au survol */
+        }
+
+        .kibana-dashboard {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .btn-dashboard {
+            background-color: #e7664c; /* Couleur du bouton pour le tableau de bord */
+            border-color: #e7664c; /* Bordure du bouton pour le tableau de bord */
+            color: #fff; /* Couleur du texte du bouton pour le tableau de bord */
+            padding: 15px 30px; /* Espacement intérieur du bouton */
+            font-size: 1.25rem; /* Taille de la police du bouton */
+            border-radius: 0.5rem; /* Bordure arrondie du bouton */
+            text-transform: uppercase; /* Texte en majuscules */
+            display: inline-block; /* Pour que le bouton soit cliquable */
+            text-decoration: none; /* Retirer la décoration du texte du bouton */
+        }
+
+        .btn-dashboard:hover {
+            background-color: #cc5d47; /* Couleur du bouton au survol */
+            border-color: #cc5d47; /* Bordure du bouton au survol */
+        }
+    </style>
 </head>
+
 <body>
+    <div class="theme-switcher">
+        <button class="theme-button light-theme" title="Mode clair">🌞</button>
+        <button class="theme-button dark-theme" title="Mode sombre">🌜</button>
+    </div>
+
     <div class="container">
-        <h1 class="my-4">Moteur de Recherche</h1>
-
-        <form action="/search" method="GET" class="mb-4">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="query">Rechercher</label>
-                    <input type="text" class="form-control" id="query" name="query" placeholder="Chanson, Artiste ou Album">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="search-container text-center">
+                    <h1 class="my-4">Spotify Top 50 Search</h1>
+                    <form action="/search" method="GET" class="search-box p-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="query" name="query"
+                                placeholder="Rechercher une chanson, un artiste ou un album">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Rechercher</button>
+                    </form>
                 </div>
-
             </div>
-            <button type="submit" class="btn btn-primary">Rechercher</button>
-        </form>
+        </div>
 
-        <h2>Résultats de la recherche</h2>
+        {% if query %}
+        <div class="results-container">
             <div id="results">
                 {% if results %}
-                    <ul class="list-group">
-                        {% for hit in results %}
-                            <li class="list-group-item">
-                                <strong>{{ hit._source.track_name }}</strong> de {{ hit._source.artist_name }}<br>
-                                Album: {{ hit._source.album_name }} | Popularité: {{ hit._source.popularity }} | Date de sortie: {{ hit._source.release_date }}<br>
-                                Lien vers la musique : <a href="{{ hit._source.external_url }}" target="_blank">{{ hit._source.external_url }}</a>
-
-                            </li>
-                        {% endfor %}
-                    </ul>
+                <p>Résultats trouvés pour la recherche "{{ query }}".</p>
+                <ul class="list-group">
+                    {% for hit in results %}
+                    <li class="list-group-item result-item">
+                        <strong>{{ hit._source.track_name }}</strong> de {{ hit._source.artist_name }}<br>
+                        Album: {{ hit._source.album_name }} | Popularité: {{ hit._source.popularity }} | Date de sortie:
+                        {{ hit._source.release_date }}<br>
+                        Lien vers la musique : <a href="{{ hit._source.external_url }}"
+                            target="_blank">{{ hit._source.external_url }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
                 {% else %}
-                    <p>Aucun résultat trouvé.</p>
+                <p>Aucun résultat trouvé pour la recherche "{{ query }}".</p>
                 {% endif %}
             </div>
+        </div>
+        {% endif %}
 
-
-
-        <h2>Tableau de bord Kibana</h2>
-        <div id="kibana-dashboard">
-            <iframe src="http://localhost:5601/app/dashboards#/view/955ec090-695b-11ef-b736-775b3386b5fa?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-15m,to:now))" width="100%" height="600"></iframe>
+        <div class="kibana-dashboard">
+            <h2>Tableau de bord Kibana</h2>
+            <a href="http://localhost:5601/app/dashboards#/view/955ec090-695b-11ef-b736-775b3386b5fa?_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:now-15m,to:now))"
+                class="btn-dashboard" target="_blank">Accéder au Tableau de Bord</a>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.theme-button').on('click', function () {
+                var themeClass = $(this).attr('class').split(' ')[1];
+                $('body').removeClass('light-theme dark-theme custom-theme').addClass(themeClass);
+            });
+        });
+    </script>
 </body>
+
 </html>

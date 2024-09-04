@@ -5,7 +5,7 @@ services:
     container_name: es01
     environment:
       - discovery.type=single-node
-      - ELASTIC_PASSWORD=wx8d19hForhL*vl1Z=5x
+      - ELASTIC_PASSWORD=CXY3AQ6jIkLsm7xzG641
     ports:
       - "9200:9200"
       - "9300:9300"
