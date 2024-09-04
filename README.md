@@ -2,11 +2,11 @@
 
 ## 🎯 **Introduction**
 
-Ce projet vise à créer un moteur de recherche spécialisé pour analyser l'évolution des hits sur Spotify. L'objectif est de visualiser les tendances musicales mondiales et d'extraire des informations utiles sur les chansons populaires par pays et par semaine.
+Ce projet vise à créer un moteur de recherche spécialisé pour analyser l'évolution des hits sur Spotify. L'objectif est de visualiser les tendances des hits en france , USA et globale
 
 ## 📝 **Objectifs**
 
-- **Collecter** les données des playlists Top 50 de Spotify pour différents pays.
+- **Collecter** les données des playlists Top 50 de Spotify.
 - **Stocker** les données traitées dans Elasticsearch.
 - **Visualiser** les tendances musicales avec Kibana.
 - **Analyser** les données pour extraire des insights pertinents sur la popularité des morceaux et des artistes.
